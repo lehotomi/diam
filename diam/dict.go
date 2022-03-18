@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
-	l "tomi/diam/mlog"
+	l "github.com/lehotomi/diam/mlog"
 )
 
 const (

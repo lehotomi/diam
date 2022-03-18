@@ -5,7 +5,7 @@ import (
 	bin "encoding/binary"
 	"net"
 	"time"
-	l "tomi/diam/mlog"
+	l "github.com/lehotomi/diam/mlog"
 )
 
 const (

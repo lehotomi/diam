@@ -7,7 +7,7 @@ import (
 	// l "tomi/diam/mlog"
 	"strconv"
 	"time"
-	l "tomi/diam/mlog"
+	l "github.com/lehotomi/diam/mlog"
 )
 
 /*

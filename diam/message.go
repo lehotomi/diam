@@ -20,7 +20,7 @@ https://www.iana.org/assignments/aaa-parameters/aaa-parameters.txt
 */
 
 import (
-	l "tomi/diam/mlog"
+	l "github.com/lehotomi/diam/mlog"
 	//"fmt"
 )
 

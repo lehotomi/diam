@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 	"strings"
-	//    "fmt"
+	//"fmt"
 )
 
 var (
@@ -24,7 +24,7 @@ var discard io.Writer = ioutil.Discard
 
 const default_flag = log.Lshortfile | log.Ltime
 
-func init() {
+func init() {    
 	Trace = log.New(discard, "TRACE ", default_flag)
 	Info = log.New(discard, "INFO ", default_flag)
 	Warn = log.New(os.Stderr, "WARN ", default_flag)

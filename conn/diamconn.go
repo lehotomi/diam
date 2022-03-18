@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"sync"
 	"time"
-	d "tomi/diam/diam"
-	l "tomi/diam/mlog"
+	d "github.com/lehotomi/diam/diam"
+	l "github.com/lehotomi/diam/mlog"
 )
 
 const (
