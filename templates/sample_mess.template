@@ -1,0 +1,42 @@
+!header command_code:272 application_id:4 request:1 proxiable:1   #credit control request
+
+# common headers added later. origin host/realm, destination realm, session-id
+0.258.1 Unsigned32 '4'		                                #Auth_Application_Id
+0.461.1 UTF8String 'version1.12645.000.000.8.32274@3gpp.org'    #AVP_CODE_Service_Context_Id
+0.416.1 Enumerated '4'                                  #AVP_CODE_CC_Request_Type
+0.415.1 Unsigned32 '0'                                      #AVP_CODE_CC_Request_Number
+0.443.1 Grouped                                             #AVP_CODE_Subscription_Id
+    0.450.1 Enumerated '0'                                  #AVP_CODE_Subscription_Id_Type
+    0.444.1 UTF8String '{{msisdn_a}}'
+0.443.1 Grouped                                             #AVP_CODE_Subscription_Id
+    0.450.1 Enumerated '1'                                  #AVP_CODE_Subscription_Id_Type
+    0.444.1 UTF8String '{{imsi_a:216701234567}}'
+0.55.1 Time '{{!now}}'                                      #Event_Time
+#0.55.1 Time '2021-11-13 15:04:05 CET'                                      #Event_Time
+#10415.22.1 OctetString '{{user_location:21670!mccnmc_to_user_loc}}'           #3GPP_User_Location_Info 
+0.439.1 Unsigned32 '1'                                      #AVP_CODE_Service_Identifier
+0.436.1 Enumerated '0'                                      #AVP_CODE_Requested_Action
+10415.873.1 Grouped                                         #AVP_CODE_Service_Information
+    12645.600.1 Grouped                                     #AVP_CODE_SMS_Information
+        12645.618.1 Enumerated '2'                          #AVP_CODE_SMS_Node
+        12645.611.1 Grouped                                 #AVP_CODE_SM_Destination_Interface
+            12645.606.1 Enumerated '2'                      #AVP_CODE_SM_Interface_Type
+            12645.603.1 UTF8String 'MT'           
+        12645.617.1 Enumerated '0'                          #AVP_CODE_SM_Message_Type        
+        12645.613.1 Grouped                                 #AVP_CODE_SM_Originator_Interface
+            12645.606.1 Enumerated '1'                      #AVP_CODE_SM_Interface_Type
+            12645.603.1 UTF8String 'MO'
+        12645.601.1 IPAddress '{{client_address:178.12.21.1}}'                 #AVP_CODE_Client_Address        
+        12645.615.1 UTF8String '1234'                      #AVP_CODE_SMSC_Address
+        12645.607.1 UTF8String '{{orig_sccp}}'             #AVP_CODE_Originating_SCCP_Address
+    10415.877.1 Grouped                                     #AVP_CODE_MMS_Information
+        10415.886.1 Grouped                                 #AVP_CODE_Originator_Address
+            10415.899.1 Enumerated '1'                      #AVP_CODE_Address_Type
+            10415.897.1 UTF8String '{{msisdn_a}}'            
+        10415.1201.1 Grouped                                #AVP_CODE_Recipient_Address
+            10415.899.1 Enumerated '1'                      #AVP_CODE_Address_Type
+            10415.897.1 UTF8String '{{msisdn_b}}'            
+        10415.1210.1 UTF8String '{{message_id}}'            #AVP_CODE_Message_ID        
+        10415.1102.1 UTF8String '1'                         #AVP_CODE_VAS_ID                
+        10415.1213.1 Grouped                                #AVP_CODE_Message_Class
+            10415.1214.1 Enumerated '0'                     #AVP_CODE_Class_Identifier

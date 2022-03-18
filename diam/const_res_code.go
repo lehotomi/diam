@@ -1,0 +1,15 @@
+package diam
+
+const (
+	SUCCESS                       = 2001
+	LIMITED_SUCCESS               = 2002
+	END_USER_SERVICE_DENIED       = 4010
+	CREDIT_CONTROL_NOT_APPLICABLE = 4011
+	CREDIT_LIMIT_REACHED          = 4012
+	USER_UNKNOWN                  = 5030
+	UNKNOWN_SESSION_ID            = 5002
+	RATING_FAILED                 = 5031
+	AUTHORIZATION_REJECTED        = 5003
+	AUTHENTICATION_REJECTED       = 4001
+	UNABLE_TO_DELIVER             = 3002
+)
