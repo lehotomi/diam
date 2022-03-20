@@ -21,7 +21,8 @@ https://www.iana.org/assignments/aaa-parameters/aaa-parameters.txt
 
 import (
 	l "github.com/lehotomi/diam/mlog"
-	//"fmt"
+   "fmt"
+   "strings"
 )
 
 type Header struct {
@@ -252,3 +253,85 @@ func Decode(in []byte) Message {
 	}
 	return c_mess
 }
+
+
+func (d *Message) ToString() string {
+   var res []string
+
+   res = append(res,fmt.Sprintf("%-11s %d", "cmd_code:", d.header.cmd_code))
+   
+   flag_str := ""
+   if d.IsRequest() {
+      flag_str += "Request"
+   } else {
+      flag_str += "Answer"
+   }
+
+   //fmt.Println(d.header.cmd_flags & 0b01000000)
+   if d.header.cmd_flags & 0b01000000 != 0 {
+		flag_str += ",Proxiable"
+	}
+
+   res = append(res, fmt.Sprintf("%-11s 0x%x %s", "flags:", d.header.cmd_flags, flag_str))
+
+   app_id := fmt.Sprintf("%d",d.header.app_id)
+   res = append(res, fmt.Sprintf("%-11s %s", "app_id:", app_id))
+
+   res = append(res, fmt.Sprintf("%-11s 0x%08x", "hop_by_hop:", d.header.hop_by_hop))
+   res = append(res, fmt.Sprintf("%-11s 0x%08x", "end_by_end:", d.header.end_to_end))
+   res = append(res,"----")   
+   res = append(res, avpsToString(d.avps, 0))
+   return strings.Join(res,"\n")
+}
+
+const (
+   const_pre = "    "
+)
+func avpsToString(avps []AVP,level int) string {
+   var res []string
+   pref := ""
+   for k := 0; k < level; k++ {
+      pref += const_pre
+   }
+   for _,v := range avps {
+      //func LookUpAvp(avp_code uint32, vendor_id uint32) AVPDictEntry {
+      c_avp_code := v.avp_code
+      c_vendor_id := v.vendor_id
+      dict_entry := LookUpAvp(c_avp_code,c_vendor_id)
+      var cline string
+
+      if c_vendor_id != 0 {
+         if dict_entry.avptype == Avp_Grouped {
+           cline = fmt.Sprintf("%sAVP: %s(%d) vnd=%d",pref,dict_entry.name,c_avp_code,c_vendor_id)
+         } else{
+           c_val := avpToValue(v)
+           cline = fmt.Sprintf("%sAVP: %s(%d) vnd=%d val=%s",pref,dict_entry.name,c_avp_code,c_vendor_id,c_val)
+         }
+      } else {
+         if dict_entry.avptype == Avp_Grouped {
+            cline = fmt.Sprintf("%sAVP: %s(%d)",pref,dict_entry.name,c_avp_code)
+         } else {
+            c_val := avpToValue(v)
+            cline = fmt.Sprintf("%sAVP: %s(%d) val=%s",pref,dict_entry.name,c_avp_code,c_val)
+         }
+      }
+ 
+      if dict_entry.avptype == Avp_Grouped {
+         child_avps, ok :=v.data.([]AVP)
+         if ! ok {
+            continue
+         }
+         child_string := avpsToString(child_avps, level+1)
+         cline += "\n"+child_string
+      }
+
+      res = append(res, cline)
+
+   }
+   return strings.Join(res,"\n")
+}
+
+func avpToValue(avp AVP) string {
+  return fmt.Sprintf("%v",avp.data)
+}
+ 
