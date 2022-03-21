@@ -316,14 +316,24 @@ func avpsToString(avps []AVP, level int) string {
 			if dict_entry.avptype == Avp_Grouped {
 				cline = fmt.Sprintf("%sAVP: %s(%d) f=%s vnd=%d", pref, dict_entry.name, c_avp_code, cflags, c_vendor_id)
 			} else {
-				c_val := avpToValue(v)
+				var c_val string
+				if dict_entry.avptype != Avp_code_unknown {
+					c_val = avpToValue(v)
+				} else {
+					c_val = fmt.Sprintf("0x%x", v.data)
+				}
 				cline = fmt.Sprintf("%sAVP: %s(%d) f=%s vnd=%d val=%s", pref, dict_entry.name, c_avp_code, cflags, c_vendor_id, c_val)
 			}
 		} else {
 			if dict_entry.avptype == Avp_Grouped {
 				cline = fmt.Sprintf("%sAVP: %s(%d) f=%s", pref, dict_entry.name, c_avp_code, cflags)
 			} else {
-				c_val := avpToValue(v)
+				var c_val string
+				if dict_entry.avptype != Avp_code_unknown {
+					c_val = avpToValue(v)
+				} else {
+					c_val = fmt.Sprintf("0x%x", v.data)
+				}
 				cline = fmt.Sprintf("%sAVP: %s(%d) f=%s val=%s", pref, dict_entry.name, c_avp_code, cflags, c_val)
 			}
 		}
