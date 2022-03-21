@@ -3,9 +3,9 @@ package conn
 import (
 	"bytes"
 	bin "encoding/binary"
+	l "github.com/lehotomi/diam/mlog"
 	"net"
 	"time"
-	l "github.com/lehotomi/diam/mlog"
 )
 
 const (

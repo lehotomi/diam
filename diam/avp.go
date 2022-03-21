@@ -5,9 +5,9 @@ import (
 	bin "encoding/binary"
 	"fmt"
 	// l "tomi/diam/mlog"
+	l "github.com/lehotomi/diam/mlog"
 	"strconv"
 	"time"
-	l "github.com/lehotomi/diam/mlog"
 )
 
 /*

@@ -3,10 +3,10 @@ package diam
 import (
 	"encoding/json"
 	"fmt"
+	l "github.com/lehotomi/diam/mlog"
 	"io/ioutil"
 	"os"
 	"strings"
-	l "github.com/lehotomi/diam/mlog"
 )
 
 const (

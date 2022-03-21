@@ -2,12 +2,12 @@ package conn
 
 import (
 	"fmt"
+	d "github.com/lehotomi/diam/diam"
+	l "github.com/lehotomi/diam/mlog"
 	"math/rand"
 	"strconv"
 	"sync"
 	"time"
-	d "github.com/lehotomi/diam/diam"
-	l "github.com/lehotomi/diam/mlog"
 )
 
 const (

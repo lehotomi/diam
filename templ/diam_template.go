@@ -5,13 +5,13 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	d "github.com/lehotomi/diam/diam"
+	l "github.com/lehotomi/diam/mlog"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
 	"time"
-	d "github.com/lehotomi/diam/diam"
-	l "github.com/lehotomi/diam/mlog"
 )
 
 const ()
@@ -505,7 +505,7 @@ func Init(templ_dir string) {
 			}
 
 			c_value := "NA"
-			if c_avp_type != d.Avp_Grouped { 
+			if c_avp_type != d.Avp_Grouped {
 				if len(c_line_split) < 6 {
 					l.Error.Printf("avp value missing, line: %s", c_line)
 					os.Exit(1)
