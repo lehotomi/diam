@@ -314,7 +314,7 @@ func avpsToString(avps []AVP, level int) string {
 		}
 		if c_vendor_id != 0 {
 			if dict_entry.avptype == Avp_Grouped {
-				cline = fmt.Sprintf("%sAVP: %s(%d) f=%s vnd=%d", pref, dict_entry.name, c_avp_code, cflags, c_vendor_id)
+				cline = fmt.Sprintf("%sAVP: %s(%d) f=%s vnd=%s(%d)", pref, dict_entry.name, c_avp_code, cflags, vendorToString(c_vendor_id), c_vendor_id)
 			} else {
 				var c_val string
 				if dict_entry.avptype != Avp_code_unknown {
@@ -322,7 +322,7 @@ func avpsToString(avps []AVP, level int) string {
 				} else {
 					c_val = fmt.Sprintf("0x%x", v.data)
 				}
-				cline = fmt.Sprintf("%sAVP: %s(%d) f=%s vnd=%d val=%s", pref, dict_entry.name, c_avp_code, cflags, c_vendor_id, c_val)
+				cline = fmt.Sprintf("%sAVP: %s(%d) f=%s vnd=%s(%d) val=%s", pref, dict_entry.name, c_avp_code, cflags, vendorToString(c_vendor_id), c_vendor_id, c_val)
 			}
 		} else {
 			if dict_entry.avptype == Avp_Grouped {
@@ -353,6 +353,31 @@ func avpsToString(avps []AVP, level int) string {
 	return strings.Join(res, "\n")
 }
 
+//TODO: put this to config
+var vendorToStringMap map[uint32]string = map[uint32]string{
+	61:       "Merit",
+	429:      "USR",
+	1751:     "Lucent",
+	2011:     "Huawei",
+	2937:     "Deutsche_Telekom_AG",
+	3830:     "Acision",
+	5806:     "SKT",
+	10415:    "TGPP",
+	12951:    "VerizonWireless",
+	13019:    "ETSI",
+	13421:    "Tango",
+	81000:    "ChinaTelecom",
+	16777216: "TGPPCX",
+	12645:    "Vodafone",
+}
+
+func vendorToString(vendor_id uint32) string {
+	c_val, ok := vendorToStringMap[vendor_id]
+	if ok {
+		return c_val
+	}
+	return "Unkown"
+}
 func avpToValue(avp AVP) string {
 	return fmt.Sprintf("%v", avp.data)
 }

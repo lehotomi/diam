@@ -128,7 +128,7 @@ func (c *ConnParam) init() {
 		},
 	}
 	for {
-		l.Info.Println(c.name, "initiating connection:", c.peer)
+		l.Trace.Println(c.name, "initiating connection:", c.peer)
 		conn, err := c_dial.Dial("tcp", c.peer)
 		if err != nil {
 			l.Error.Println(c.name, err)
@@ -137,7 +137,7 @@ func (c *ConnParam) init() {
 			continue
 		}
 		c.state = UP
-		l.Info.Println(c.name, "...connection established:", c.peer)
+		l.Trace.Println(c.name, "...connection established:", c.peer)
 		c.Conn = conn
 		c.mgmt_ch <- NewEvent(tcp_up, nil)
 		break
