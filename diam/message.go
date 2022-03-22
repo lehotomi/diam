@@ -376,8 +376,26 @@ func vendorToString(vendor_id uint32) string {
 	if ok {
 		return c_val
 	}
-	return "Unkown"
+	return "Unknown"
 }
+
 func avpToValue(avp AVP) string {
+	if avp.format == Avp_OctetString {
+		return fmt.Sprintf("0x%x", avp.data)
+	}
+
+	if avp.format == Avp_Enumerated {
+
+		enum_int_val, ok := avp.data.(int32)
+		if !ok {
+			return fmt.Sprintf("%v", avp.data)
+		}
+		mapped_str, ok := LookUpAvp_Enum(avp.avp_code, avp.vendor_id, enum_int_val)
+
+		if !ok {
+			return fmt.Sprintf("%d", avp.data)
+		}
+		return fmt.Sprintf("%s(%d)", mapped_str, avp.data)
+	}
 	return fmt.Sprintf("%v", avp.data)
 }

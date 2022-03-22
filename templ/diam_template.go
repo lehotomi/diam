@@ -189,9 +189,16 @@ func collectRow(level int, rows []TemplRow, pars map[string]string) []d.AVP {
 						stringToAvp_Unsigned64(computed_value),
 						rows[j].mandatory_flag,
 						rows[j].vendor_id))
-			case d.Avp_Integer32, d.Avp_Enumerated:
+			case d.Avp_Integer32:
 				ret = append(ret,
 					d.AVP_Integer32(
+						rows[j].avp_code,
+						stringToAvp_Integer32(computed_value),
+						rows[j].mandatory_flag,
+						rows[j].vendor_id))
+			case d.Avp_Enumerated:
+				ret = append(ret,
+					d.AVP_Enumerated(
 						rows[j].avp_code,
 						stringToAvp_Integer32(computed_value),
 						rows[j].mandatory_flag,
