@@ -257,7 +257,7 @@ func Decode(in []byte) Message {
 func (d *Message) ToString() string {
 	var res []string
 
-	res = append(res, fmt.Sprintf("%-11s %d", "cmd_code:", d.header.cmd_code))
+	res = append(res, fmt.Sprintf("%-11s %s", "cmd_code:", cmdCodeToString(d.header.cmd_code)))
 
 	flag_str := ""
 	if d.IsRequest() {
@@ -273,8 +273,8 @@ func (d *Message) ToString() string {
 
 	res = append(res, fmt.Sprintf("%-11s 0x%x %s", "flags:", d.header.cmd_flags, flag_str))
 
-	app_id := fmt.Sprintf("%d", d.header.app_id)
-	res = append(res, fmt.Sprintf("%-11s %s", "app_id:", app_id))
+	//app_id := fmt.Sprintf("%d", d.header.app_id)
+	res = append(res, fmt.Sprintf("%-11s %s", "app_id:", cmdAppidToString(d.header.app_id)))
 
 	res = append(res, fmt.Sprintf("%-11s 0x%08x", "hop_by_hop:", d.header.hop_by_hop))
 	res = append(res, fmt.Sprintf("%-11s 0x%08x", "end_by_end:", d.header.end_to_end))
@@ -377,6 +377,22 @@ func vendorToString(vendor_id uint32) string {
 		return c_val
 	}
 	return "Unknown"
+}
+
+func cmdCodeToString(cmd_code uint32) string {
+	cmd_str, ok := LookUpAvp_command(cmd_code)
+	if !ok {
+		return fmt.Sprintf("%d", cmd_code)
+	}
+	return fmt.Sprintf("%s(%d)", cmd_str, cmd_code)
+}
+
+func cmdAppidToString(app_id uint32) string {
+	cmd_str, ok := LookUpAvp_appid(app_id)
+	if !ok {
+		return fmt.Sprintf("%d", app_id)
+	}
+	return fmt.Sprintf("%s(%d)", cmd_str, app_id)
 }
 
 func avpToValue(avp AVP) string {
