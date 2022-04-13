@@ -343,8 +343,10 @@ func avpsToString(avps []AVP, level int) string {
 			if !ok {
 				continue
 			}
-			child_string := avpsToString(child_avps, level+1)
-			cline += "\n" + child_string
+			if len(child_avps) != 0 {
+				child_string := avpsToString(child_avps, level+1)
+				cline += "\n" + child_string
+			}
 		}
 
 		res = append(res, cline)
